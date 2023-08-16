@@ -1,7 +1,9 @@
+# Django
 from django import forms
-from auths.models import CustomUser
 from django.core.exceptions import ValidationError
 
+# Apps
+from auths.models import CustomUser
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(

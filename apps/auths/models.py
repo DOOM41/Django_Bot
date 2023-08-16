@@ -13,7 +13,7 @@ from django.core.exceptions import ValidationError
 # Apps
 from abstracts.validators import APIValidator
 from abstracts.models import AbstractsDateTime
-
+from auths.utils import generate_code
 
 class CustomUserManager(
     BaseUserManager
@@ -57,7 +57,20 @@ class CustomUserManager(
         user.save(using=self._db)
 
         return user
-
+    
+    def set_code(self, user: 'CustomUser'):
+        while True:
+            code = generate_code()  
+            stmt = self.filter(bot_code=code).exists()
+            if not stmt:
+                user.bot_code = code
+                user.save()
+                break
+            
+    def set_chat_id(self, user: 'CustomUser', chat_id):
+        user.chat_id = chat_id
+        user.save()
+        
 
 
 class CustomUser(
@@ -74,6 +87,17 @@ class CustomUser(
     first_name = CharField(
         'Имя',
         max_length=100,
+    )
+    bot_code = CharField(
+        'Код для связи с телеграмм',
+        max_length=10,
+        unique=True,
+        null=True
+    )
+    chat_id = CharField(
+        'ID чата пользователя в телеграмме',
+        max_length=100,
+        unique=True
     )
     
     is_active: BooleanField = BooleanField(default=True)
