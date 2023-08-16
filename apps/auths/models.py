@@ -59,14 +59,14 @@ class CustomUserManager(
         return user
     
     def set_code(self, user: 'CustomUser'):
-        while True:
+        while True and not user.chat_id:
             code = generate_code()  
             stmt = self.filter(bot_code=code).exists()
             if not stmt:
                 user.bot_code = code
                 user.save()
                 break
-            
+
     def set_chat_id(self, user: 'CustomUser', chat_id):
         user.chat_id = chat_id
         user.save()
@@ -97,7 +97,8 @@ class CustomUser(
     chat_id = CharField(
         'ID чата пользователя в телеграмме',
         max_length=100,
-        unique=True
+        unique=True,
+        null=True
     )
     
     is_active: BooleanField = BooleanField(default=True)

@@ -3,10 +3,15 @@
 {% block content %}
 {% if user.is_authenticated %}
     {% if not user.chat_id %}
-        <h1>Отправить следующии код {{ user.bot_code }} в телеграм бота ... </h1>
+        <h1>Отправить следующии код {{ user.bot_code }} в телеграм бота @get_message_from_site_bot </h1>
     {% else %}
-        <h1>Отправить сообщение </h1>
-        <input type="text">
+    <form method="post">
+        {% csrf_token %}{{form}}
+        <button type="submit" class="btn btn-success">Отправить</button>
+    </form>
+
+    
+
     {% endif %}
     
 {% else %}

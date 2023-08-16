@@ -16,6 +16,7 @@ from django.http import HttpRequest, HttpResponse
 # DRF
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework import status
 
 # Apps
@@ -59,13 +60,16 @@ class LogoutView(View):
         return redirect('/login')
 
 class SetBotCodeView(APIView):
-    def post(self, request, format=None):
+    def post(self, request: Request, format=None):
         serializer = CustomUserSerializer(data=request.data)
+        
         if serializer.is_valid():
             try:
                 chat_id = serializer.validated_data['chat_id']
                 bot_code = serializer.validated_data['bot_code']
-                user = CustomUser.objects.get(bot_code=bot_code)
+                user: CustomUser = CustomUser.objects.get(bot_code=bot_code)
+                if user.chat_id:
+                    return Response({'error': 'Пользователь уже иницирован!'}, status=status.HTTP_400_BAD_REQUEST)
                 CustomUser.objects.set_chat_id(user, chat_id)
                 return Response(status=status.HTTP_200_OK)
             except CustomUser.DoesNotExist:

@@ -15,6 +15,8 @@ DEBUG = get_env_variable("DEBUG")
 
 ADMIN_SITE_URL = get_env_variable("ADMIN_SITE_URL")
 
+BOT_API = get_env_variable("BOT_API")
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
