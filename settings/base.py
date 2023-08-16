@@ -16,7 +16,9 @@ DJANGO_AND_THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'abstracts.apps.AbstractsConfig',
     "auths.apps.AuthsConfig",
-    "messages_to_bot.apps.MessagesToBotConfig"
+    "messages_to_bot.apps.MessagesToBotConfig",
+    'crispy_bootstrap5',
+    'crispy_forms',
 ]
 
 INSTALLED_APPS = DJANGO_AND_THIRD_PARTY_APPS + PROJECT_APPS
@@ -35,7 +37,9 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

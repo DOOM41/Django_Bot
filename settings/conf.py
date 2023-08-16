@@ -15,6 +15,10 @@ DEBUG = get_env_variable("DEBUG")
 
 ADMIN_SITE_URL = get_env_variable("ADMIN_SITE_URL")
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 ALLOWED_HOSTS = []
 
 ROOT_URLCONF = 'settings.urls'
